@@ -31,9 +31,17 @@ public class MainActivity extends AppCompatActivity
 
         _takenImage = this.findViewById(R.id.TakenImage);
         Button retryButton = this.findViewById(R.id.RetryButton);
+        Button translateButton = this.findViewById(R.id.TranslateButton);
 
         retryButton.setOnClickListener(v -> dispatchTakePictureIntent());
-        dispatchTakePictureIntent();
+        translateButton.setOnClickListener(v -> {
+            //TODO Indicate progress of the image being processed.
+            UploadTask ut = new UploadTask();
+
+            ut.execute(_currentPhotoPath);
+        });
+
+        //dispatchTakePictureIntent();
     }
 
     @SuppressLint("QueryPermissionsNeeded")
