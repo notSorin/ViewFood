@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     private String _currentPhotoPath;
     private Uri _photoURI;
     private Button _translateButton, _photoButton;
+    private TextView _translatedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,13 +36,17 @@ public class MainActivity extends AppCompatActivity
         _takenImage = this.findViewById(R.id.TakenImage);
         _photoButton = this.findViewById(R.id.RetryButton);
         _translateButton = this.findViewById(R.id.TranslateButton);
+        _translatedText = findViewById(R.id.TranslatedText);
 
         _photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
         _translateButton.setOnClickListener(v -> {
             //TODO Indicate progress of the image being processed.
-            UploadTask ut = new UploadTask();
+            //UploadTask ut = new UploadTask();
 
-            ut.execute(_currentPhotoPath);
+            //ut.execute(_currentPhotoPath);
+            _takenImage.setVisibility(View.GONE);
+            _translatedText.setVisibility(View.VISIBLE);
+            _translateButton.setVisibility(View.GONE);
         });
 
         //dispatchTakePictureIntent();
@@ -84,9 +90,12 @@ public class MainActivity extends AppCompatActivity
 
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
+            _takenImage.setVisibility(View.VISIBLE);
             _takenImage.setRotation(getCameraPhotoOrientation(_currentPhotoPath));
             _takenImage.setImageURI(_photoURI);
+            _takenImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             _translateButton.setVisibility(View.VISIBLE);
+            _translatedText.setVisibility(View.GONE);
         }
     }
 
