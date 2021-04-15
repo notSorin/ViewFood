@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import java.io.File;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView _takenImage;
     private String _currentPhotoPath;
     private Uri _photoURI;
+    private Button _translateButton, _photoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,11 +32,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         _takenImage = this.findViewById(R.id.TakenImage);
-        Button retryButton = this.findViewById(R.id.RetryButton);
-        Button translateButton = this.findViewById(R.id.TranslateButton);
+        _photoButton = this.findViewById(R.id.RetryButton);
+        _translateButton = this.findViewById(R.id.TranslateButton);
 
-        retryButton.setOnClickListener(v -> dispatchTakePictureIntent());
-        translateButton.setOnClickListener(v -> {
+        _photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
+        _translateButton.setOnClickListener(v -> {
             //TODO Indicate progress of the image being processed.
             UploadTask ut = new UploadTask();
 
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         {
             _takenImage.setRotation(getCameraPhotoOrientation(_currentPhotoPath));
             _takenImage.setImageURI(_photoURI);
+            _translateButton.setVisibility(View.VISIBLE);
         }
     }
 
