@@ -14,11 +14,35 @@
         android:textColor="@color/black"
         android:textSize="40sp" />
 
-    <ImageView
-        android:id="@+id/TakenImage"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:src="@drawable/noimage" />
+        android:layout_height="500dp">
+
+        <ImageView
+            android:id="@+id/TakenImage"
+            android:layout_width="match_parent"
+            android:scaleType="center"
+            android:layout_height="500dp"
+            android:src="@drawable/noimage" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TranslatedText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:padding="30dp"
+                android:text="Translated text and/or translated image will be shown here."
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+        </ScrollView>
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
