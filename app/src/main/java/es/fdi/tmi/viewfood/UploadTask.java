@@ -44,6 +44,7 @@ public class UploadTask extends AsyncTask<String, String, String>
 
         Request request = new Request.Builder().url(SERVER_URL).post(requestBody).build();
         OkHttpClient client = new OkHttpClient();
+
         client.newCall(request).enqueue(new Callback()
         {
             @Override
