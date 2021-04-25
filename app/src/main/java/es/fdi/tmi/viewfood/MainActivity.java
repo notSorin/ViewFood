@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,11 +30,12 @@ public class MainActivity extends AppCompatActivity
     private final CharSequence[] LANGUAGE_CHOICES = {"English", "French", "German", "Italian", "Romanian"};
     private final CharSequence[] LANGUAGE_CODES = {"en", "fr", "de", "it", "ro"};
     private final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView _takenImage, _languageSelector;
+    private ImageView _languageSelector;
     private String _currentPhotoPath;
     private Uri _photoURI;
     private Button _translateButton, _photoButton;
     private SharedPreferences _preferences;
+    private Fragment _takenPhotoFragment, _translatedTextFragment, _translatedPhotoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,9 +61,13 @@ public class MainActivity extends AppCompatActivity
     {
         MyFragmentAdapter mfa = new MyFragmentAdapter(getSupportFragmentManager());
 
-        mfa.addFragment(new TakenPictureFragment(), "Taken Photo");
-        mfa.addFragment(new TranslatedTextFragment(), "Translated Text");
-        mfa.addFragment(new TranslatedPhotoFragment(), "Translated Photo");
+        _takenPhotoFragment = new TakenPhotoFragment();
+        _translatedTextFragment = new TranslatedTextFragment();
+        _translatedPhotoFragment = new TranslatedPhotoFragment();
+
+        mfa.addFragment(_takenPhotoFragment, "Taken Photo");
+        mfa.addFragment(_translatedTextFragment, "Translated Text");
+        mfa.addFragment(_translatedPhotoFragment, "Translated Photo");
 
         TabLayout tabLayout = findViewById(R.id.MainTabLayout);
         ViewPager vp = findViewById(R.id.MainPager);
@@ -81,7 +87,6 @@ public class MainActivity extends AppCompatActivity
             //int selectedIndex = _preferences.getInt(getString(R.string.language_index), 0);
 
             //ut.execute(_currentPhotoPath, LANGUAGE_CODES[selectedIndex].toString());
-            _takenImage.setVisibility(View.GONE);
             _translateButton.setVisibility(View.GONE);
         });
     }
@@ -157,10 +162,10 @@ public class MainActivity extends AppCompatActivity
 
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-            _takenImage.setVisibility(View.VISIBLE);
+            /*_takenImage.setVisibility(View.VISIBLE);
             _takenImage.setRotation(getCameraPhotoOrientation(_currentPhotoPath));
             _takenImage.setImageURI(_photoURI);
-            _takenImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            _takenImage.setScaleType(ImageView.ScaleType.FIT_CENTER);*/
             _translateButton.setVisibility(View.VISIBLE);
         }
     }
