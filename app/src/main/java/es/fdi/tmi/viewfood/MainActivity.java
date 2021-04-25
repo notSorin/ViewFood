@@ -22,6 +22,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
 {
     private final CharSequence[] LANGUAGE_CHOICES = {"English", "French", "German", "Italian", "Romanian"};
+    private final CharSequence[] LANGUAGE_CODES = {"en", "fr", "de", "it", "ro"};
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView _takenImage, _languageSelector;
     private String _currentPhotoPath;
