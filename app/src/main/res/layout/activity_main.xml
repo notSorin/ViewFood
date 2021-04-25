@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
         android:gravity="center"
-        android:text="ViewFood"
+        android:text="@string/app_name"
         android:textColor="@color/black"
         android:textSize="40sp" />
 
@@ -21,8 +22,9 @@
         <ImageView
             android:id="@+id/TakenImage"
             android:layout_width="match_parent"
-            android:scaleType="center"
             android:layout_height="500dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="center"
             android:src="@drawable/noimage" />
 
         <ScrollView
@@ -36,7 +38,7 @@
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:padding="30dp"
-                android:text="Translated text and/or translated image will be shown here."
+                android:text="@string/text_placeholder"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
@@ -55,14 +57,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="Take Photo" />
+            android:text="@string/take_photo"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/TranslateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Translate"
-            android:visibility="gone" />
+            android:text="@string/translate"
+            android:visibility="gone"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
