@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -20,8 +21,9 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
 {
+    private final CharSequence[] LANGUAGE_CHOICES = {"English", "French", "German", "Italian", "Romanian"};
     private final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView _takenImage;
+    private ImageView _takenImage, _languageSelector;
     private String _currentPhotoPath;
     private Uri _photoURI;
     private Button _translateButton, _photoButton;
@@ -32,14 +34,31 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeViews();
 
-        _takenImage = this.findViewById(R.id.TakenImage);
-        _photoButton = this.findViewById(R.id.RetryButton);
-        _translateButton = this.findViewById(R.id.TranslateButton);
+        //dispatchTakePictureIntent();
+    }
+
+    private void initializeViews()
+    {
+        initializeTakenImage();
+        initializeLanguageSelector();
+        initializePhotoButton();
+        initializeTranslateButton();
+        initializeTranslatedText();
+    }
+
+    private void initializeTranslatedText()
+    {
         _translatedText = findViewById(R.id.TranslatedText);
+    }
 
-        _photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
-        _translateButton.setOnClickListener(v -> {
+    private void initializeTranslateButton()
+    {
+        _translateButton = findViewById(R.id.TranslateButton);
+
+        _translateButton.setOnClickListener(v ->
+        {
             //TODO Indicate progress of the image being processed.
             //UploadTask ut = new UploadTask();
 
@@ -48,8 +67,35 @@ public class MainActivity extends AppCompatActivity
             _translatedText.setVisibility(View.VISIBLE);
             _translateButton.setVisibility(View.GONE);
         });
+    }
 
-        //dispatchTakePictureIntent();
+    private void initializePhotoButton()
+    {
+        _photoButton = findViewById(R.id.RetryButton);
+
+        _photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
+    }
+
+    private void initializeLanguageSelector()
+    {
+        _languageSelector = findViewById(R.id.LanguageSelector);
+
+        _languageSelector.setOnClickListener(v ->
+        {
+            //TODO save the selected language on disk, and set the selected language each time the
+            //dialog is opened.
+            new MaterialAlertDialogBuilder(MainActivity.this)
+                    .setTitle("Translate into...")
+                    .setSingleChoiceItems(LANGUAGE_CHOICES, 0, null)
+                    .setPositiveButton("OK", null)
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
+    }
+
+    private void initializeTakenImage()
+    {
+        _takenImage = findViewById(R.id.TakenImage);
     }
 
     @SuppressLint("QueryPermissionsNeeded")
