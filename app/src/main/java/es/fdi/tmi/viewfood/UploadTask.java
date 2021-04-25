@@ -20,16 +20,17 @@ public class UploadTask extends AsyncTask<String, String, String>
     @Override
     protected String doInBackground(String... strings)
     {
-        uploadFile(strings[0]);
+        uploadFile(strings[0], strings[0]);
 
         return "task ended";
     }
 
-    private void uploadFile(String path)
+    private void uploadFile(String path, String targetTranslation)
     {
         File f = new File(path);
         RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).
                 addFormDataPart("image", f.getName(), RequestBody.create(MediaType.parse("image/*"), f)).
+                addFormDataPart("lang", targetTranslation).
                 build();
 
         //TODO Delete debug logs for release.
