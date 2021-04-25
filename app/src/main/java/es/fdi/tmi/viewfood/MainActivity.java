@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity
     {
         MyFragmentAdapter mfa = new MyFragmentAdapter(getSupportFragmentManager());
 
-        //mfa.addFragment(new TakenPictureFragment(), "Taken Photo");
-        //mfa.addFragment(new TranslatedTextFragment(), "Translated Text");
-        //mfa.addFragment(new TranslatedPhotoFragment(), "Translated Photo");
+        mfa.addFragment(new TakenPictureFragment(), "Taken Photo");
+        mfa.addFragment(new TranslatedTextFragment(), "Translated Text");
+        mfa.addFragment(new TranslatedPhotoFragment(), "Translated Photo");
 
         TabLayout tabLayout = findViewById(R.id.MainTabLayout);
         ViewPager vp = findViewById(R.id.MainPager);
