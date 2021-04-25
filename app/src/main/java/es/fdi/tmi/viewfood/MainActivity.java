@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -32,8 +31,11 @@ public class MainActivity extends AppCompatActivity
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private String _currentPhotoPath;
     private Button _translateButton;
+    private Uri _photoURI;
     private SharedPreferences _preferences;
-    private Fragment _takenPhotoFragment, _translatedTextFragment, _translatedPhotoFragment;
+    private TakenPhotoFragment _takenPhotoFragment;
+    private TranslatedTextFragment _translatedTextFragment;
+    private TranslatedPhotoFragment _translatedPhotoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         TabLayout tabLayout = findViewById(R.id.MainTabLayout);
         ViewPager vp = findViewById(R.id.MainPager);
 
+        vp.setOffscreenPageLimit(3);
         vp.setAdapter(mfa);
         tabLayout.setupWithViewPager(vp);
     }
@@ -145,7 +148,7 @@ public class MainActivity extends AppCompatActivity
             if(photoFile != null)
             {
                 _currentPhotoPath = photoFile.getAbsolutePath();
-                Uri _photoURI = FileProvider.getUriForFile(this, "es.fdi.tmi.viewfood", photoFile);
+                _photoURI = FileProvider.getUriForFile(this, "es.fdi.tmi.viewfood", photoFile);
 
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, _photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -160,11 +163,8 @@ public class MainActivity extends AppCompatActivity
 
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-            /*_takenImage.setVisibility(View.VISIBLE);
-            _takenImage.setRotation(getCameraPhotoOrientation(_currentPhotoPath));
-            _takenImage.setImageURI(_photoURI);
-            _takenImage.setScaleType(ImageView.ScaleType.FIT_CENTER);*/
             _translateButton.setVisibility(View.VISIBLE);
+            _takenPhotoFragment.setPhoto(_photoURI, getCameraPhotoOrientation(_currentPhotoPath));
         }
     }
 
