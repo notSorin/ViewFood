@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             int selectedIndex = _preferences.getInt(getString(R.string.language_index), 0);
 
             new MaterialAlertDialogBuilder(MainActivity.this)
-                    .setTitle("Translate into...")
+                    .setTitle("Translate from Spanish into...")
                     .setSingleChoiceItems(LANGUAGE_CHOICES, selectedIndex, null)
                     .setPositiveButton("OK", (dialog, which) ->
                     {

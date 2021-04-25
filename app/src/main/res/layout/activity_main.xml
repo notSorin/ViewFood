@@ -28,7 +28,8 @@
             android:layout_alignEnd="@id/TitleText"
             android:layout_marginEnd="20dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/flag">
+            android:src="@drawable/flag"
+            android:tint="#404040">
 
         </ImageView>
 
