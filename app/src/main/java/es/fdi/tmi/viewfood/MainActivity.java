@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
+import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.tabs.TabLayout;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity
     private String _currentPhotoPath;
     private Uri _photoURI;
     private Button _translateButton, _photoButton;
-    private TextView _translatedText;
     private SharedPreferences _preferences;
 
     @Override
@@ -49,16 +49,25 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeViews()
     {
-        initializeTakenImage();
         initializeLanguageSelector();
+        initializeTabbedLayout();
         initializePhotoButton();
         initializeTranslateButton();
-        initializeTranslatedText();
     }
 
-    private void initializeTranslatedText()
+    private void initializeTabbedLayout()
     {
-        _translatedText = findViewById(R.id.TranslatedText);
+        MyFragmentAdapter mfa = new MyFragmentAdapter(getSupportFragmentManager());
+
+        //mfa.addFragment(new TakenPictureFragment(), "Taken Photo");
+        //mfa.addFragment(new TranslatedTextFragment(), "Translated Text");
+        //mfa.addFragment(new TranslatedPhotoFragment(), "Translated Photo");
+
+        TabLayout tabLayout = findViewById(R.id.MainTabLayout);
+        ViewPager vp = findViewById(R.id.MainPager);
+
+        vp.setAdapter(mfa);
+        tabLayout.setupWithViewPager(vp);
     }
 
     private void initializeTranslateButton()
@@ -73,7 +82,6 @@ public class MainActivity extends AppCompatActivity
 
             //ut.execute(_currentPhotoPath, LANGUAGE_CODES[selectedIndex].toString());
             _takenImage.setVisibility(View.GONE);
-            _translatedText.setVisibility(View.VISIBLE);
             _translateButton.setVisibility(View.GONE);
         });
     }
@@ -109,11 +117,6 @@ public class MainActivity extends AppCompatActivity
                     .setNegativeButton("Cancel", null)
                     .show();
         });
-    }
-
-    private void initializeTakenImage()
-    {
-        _takenImage = findViewById(R.id.TakenImage);
     }
 
     @SuppressLint("QueryPermissionsNeeded")
@@ -159,7 +162,6 @@ public class MainActivity extends AppCompatActivity
             _takenImage.setImageURI(_photoURI);
             _takenImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             _translateButton.setVisibility(View.VISIBLE);
-            _translatedText.setVisibility(View.GONE);
         }
     }
 
