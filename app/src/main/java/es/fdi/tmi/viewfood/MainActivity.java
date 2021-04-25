@@ -30,10 +30,8 @@ public class MainActivity extends AppCompatActivity
     private final CharSequence[] LANGUAGE_CHOICES = {"English", "French", "German", "Italian", "Romanian"};
     private final CharSequence[] LANGUAGE_CODES = {"en", "fr", "de", "it", "ro"};
     private final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView _languageSelector;
     private String _currentPhotoPath;
-    private Uri _photoURI;
-    private Button _translateButton, _photoButton;
+    private Button _translateButton;
     private SharedPreferences _preferences;
     private Fragment _takenPhotoFragment, _translatedTextFragment, _translatedPhotoFragment;
 
@@ -93,16 +91,16 @@ public class MainActivity extends AppCompatActivity
 
     private void initializePhotoButton()
     {
-        _photoButton = findViewById(R.id.RetryButton);
+        Button photoButton = findViewById(R.id.RetryButton);
 
-        _photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
+        photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
     }
 
     private void initializeLanguageSelector()
     {
-        _languageSelector = findViewById(R.id.LanguageSelector);
+        ImageView languageSelector = findViewById(R.id.LanguageSelector);
 
-        _languageSelector.setOnClickListener(v ->
+        languageSelector.setOnClickListener(v ->
         {
             int selectedIndex = _preferences.getInt(getString(R.string.language_index), 0);
 
@@ -147,7 +145,7 @@ public class MainActivity extends AppCompatActivity
             if(photoFile != null)
             {
                 _currentPhotoPath = photoFile.getAbsolutePath();
-                _photoURI = FileProvider.getUriForFile(this, "es.fdi.tmi.viewfood", photoFile);
+                Uri _photoURI = FileProvider.getUriForFile(this, "es.fdi.tmi.viewfood", photoFile);
 
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, _photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
