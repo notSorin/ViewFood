@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".TranslatedPhotoFragment">
 
     <TextView
-        android:id="@+id/TranslatedText"
+        android:id="@+id/TranslatedPhotoPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
@@ -17,5 +18,12 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:visibility="visible" />
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/TranslatedPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:visibility="gone" />
 
 </LinearLayout>
