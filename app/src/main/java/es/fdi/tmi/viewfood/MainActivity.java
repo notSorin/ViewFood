@@ -253,4 +253,9 @@ public class MainActivity extends AppCompatActivity
     {
         _translatedTextFragment.setText(text);
     }
+
+    public void setTranslatedPhoto(String photoURL)
+    {
+        _translatedPhotoFragment.setPhoto("http://35.246.247.149" + photoURL);
+    }
 }
