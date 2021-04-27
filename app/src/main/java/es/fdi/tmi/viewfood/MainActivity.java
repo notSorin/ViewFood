@@ -89,10 +89,10 @@ public class MainActivity extends AppCompatActivity
         _translateButton.setOnClickListener(v ->
         {
             //TODO Indicate progress of the image being processed.
-            //UploadTask ut = new UploadTask();
-            //int selectedIndex = _preferences.getInt(getString(R.string.language_index), 0);
+            UploadTask ut = new UploadTask(this);
+            int selectedIndex = _preferences.getInt(getString(R.string.language_index), 0);
 
-            //ut.execute(_currentPhotoPath, LANGUAGE_CODES[selectedIndex].toString());
+            ut.execute(_currentPhotoPath, LANGUAGE_CODES[selectedIndex].toString());
             _translateButton.setVisibility(View.GONE);
         });
     }

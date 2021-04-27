@@ -2,6 +2,8 @@ package es.fdi.tmi.viewfood;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import okhttp3.Call;
@@ -16,6 +18,12 @@ import okhttp3.Response;
 public class UploadTask extends AsyncTask<String, String, String>
 {
     private final String SERVER_URL = "http://35.246.247.149/api/menu/menu/upload/";
+    private MainActivity _mainActivity;
+
+    public UploadTask(MainActivity ma)
+    {
+        _mainActivity = ma;
+    }
 
     @Override
     protected String doInBackground(String... strings)
@@ -57,7 +65,26 @@ public class UploadTask extends AsyncTask<String, String, String>
             @Override
             public void onResponse(Call call, Response response)
             {
-                Log.d("UPLOAD_FILE", response.toString());
+                try
+                {
+                    JSONObject jObject = new JSONObject(response.body().string());
+
+                    _mainActivity.runOnUiThread(() ->
+                    {
+                        try
+                        {
+                            _mainActivity.setTranslatedText(jObject.getString("description"));
+                        }
+                        catch(JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+                catch(JSONException | IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
     }
