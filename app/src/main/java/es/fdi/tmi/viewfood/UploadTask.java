@@ -15,12 +15,12 @@ import okhttp3.Response;
 
 public class UploadTask extends AsyncTask<String, String, String>
 {
-    private final String SERVER_URL = "http://35.246.247.149/api/menu/menu/";
+    private final String SERVER_URL = "http://35.246.247.149/api/menu/menu/upload/";
 
     @Override
     protected String doInBackground(String... strings)
     {
-        uploadFile(strings[0], strings[0]);
+        uploadFile(strings[0], strings[1]);
 
         return "task ended";
     }
