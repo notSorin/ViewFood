@@ -13,7 +13,6 @@ import com.github.chrisbanes.photoview.PhotoView;
 
 public class TakenPhotoFragment extends Fragment
 {
-    private View _view;
     private PhotoView _takenImage;
     private TextView _textPlaceholder;
 
@@ -21,11 +20,12 @@ public class TakenPhotoFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        _view = inflater.inflate(R.layout.fragment_taken_photo, container, false);
-        _textPlaceholder = _view.findViewById(R.id.UserPhotoPlaceholder);
-        _takenImage = _view.findViewById(R.id.TakenPhoto);
+        View v = inflater.inflate(R.layout.fragment_taken_photo, container, false);
 
-        return _view;
+        _textPlaceholder = v.findViewById(R.id.UserPhotoPlaceholder);
+        _takenImage = v.findViewById(R.id.TakenPhoto);
+
+        return v;
     }
 
     public void setPhoto(Uri photoURI)
