@@ -9,6 +9,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,7 +22,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -164,8 +169,44 @@ public class MainActivity extends AppCompatActivity
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
             _translateButton.setVisibility(View.VISIBLE);
-            _takenPhotoFragment.setPhoto(_photoURI, getCameraPhotoOrientation(_currentPhotoPath));
+            processTakenPhoto();
+            _takenPhotoFragment.setPhoto(_photoURI);
         }
+    }
+
+    //It changes the size of _currentPhotoPath, and it also rotates it according to the exif
+    //rotation of the photo.
+    private Bitmap processTakenPhoto()
+    {
+        Bitmap bitmap = BitmapFactory.decodeFile(_currentPhotoPath, null);
+        float aspect = (float)bitmap.getWidth() / (float)bitmap.getHeight();
+        int width = 1024, height = (int)(width / aspect);
+        Matrix matrix = new Matrix();
+
+        //Scale the photo.
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+
+        matrix.postRotate(getCameraPhotoOrientation(_currentPhotoPath));
+
+        //Rotate the photo.
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+        try
+        {
+            //Override the photo on disk with the new one.
+            FileOutputStream fos = new FileOutputStream(_currentPhotoPath);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -185,7 +226,7 @@ public class MainActivity extends AppCompatActivity
         try
         {
             ExifInterface exif = new ExifInterface(imagePath);
-            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
+            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
         }
         catch(Exception e1)
         {

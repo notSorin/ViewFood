@@ -25,9 +25,8 @@ public class TakenPhotoFragment extends Fragment
         return _view;
     }
 
-    public void setPhoto(Uri photoURI, int cameraPhotoOrientation)
+    public void setPhoto(Uri photoURI)
     {
-        _takenImage.setRotation(cameraPhotoOrientation);
         _takenImage.setImageURI(photoURI);
         _takenImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
     }
