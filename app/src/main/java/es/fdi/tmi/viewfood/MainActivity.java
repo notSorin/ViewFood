@@ -248,4 +248,9 @@ public class MainActivity extends AppCompatActivity
 
         return rotate;
     }
+
+    public void setTranslatedText(String text)
+    {
+        _translatedTextFragment.setText(text);
+    }
 }
