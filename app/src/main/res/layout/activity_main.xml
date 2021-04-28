@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:gravity="center">
 
         <TextView
@@ -36,55 +37,72 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/MainTabLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:color/transparent"
-            app:tabMode="scrollable" />
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/MainPager"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/MainTabLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                app:tabMode="scrollable" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/MainPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/PhotoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="@string/take_photo"
-            tools:ignore="ButtonStyle" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/TranslateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/translate"
-            android:visibility="gone"
-            tools:ignore="ButtonStyle" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
 
-        <ProgressBar
-            android:id="@+id/ProgressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            <ProgressBar
+                android:id="@+id/ProgressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </RelativeLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/PhotoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="30dp"
+                android:text="@string/take_photo"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/TranslateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="30dp"
+                android:text="@string/translate"
+                android:visibility="gone"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>
