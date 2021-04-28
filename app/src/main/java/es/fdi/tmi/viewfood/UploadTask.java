@@ -72,8 +72,7 @@ public class UploadTask extends AsyncTask<String, String, String>
                     {
                         try
                         {
-                            _mainActivity.setTranslatedText(jObject.getString("description"));
-                            _mainActivity.setTranslatedPhoto(jObject.getString("image"));
+                            _mainActivity.setResponseFromServer(jObject.getString("description"), jObject.getString("image"));
                         }
                         catch(JSONException e)
                         {

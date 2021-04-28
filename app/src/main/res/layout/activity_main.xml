@@ -63,7 +63,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/RetryButton"
+            android:id="@+id/PhotoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
@@ -77,6 +77,13 @@
             android:text="@string/translate"
             android:visibility="gone"
             tools:ignore="ButtonStyle" />
+
+        <ProgressBar
+            android:id="@+id/ProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
     </LinearLayout>
 

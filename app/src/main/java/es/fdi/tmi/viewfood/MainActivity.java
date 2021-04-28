@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import java.io.BufferedOutputStream;
@@ -35,12 +36,13 @@ public class MainActivity extends AppCompatActivity
     private final CharSequence[] LANGUAGE_CODES = {"en", "fr", "de", "it", "ro"};
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private String _currentPhotoPath;
-    private Button _translateButton;
+    private Button _photoButton, _translateButton;
     private Uri _photoURI;
     private SharedPreferences _preferences;
     private TakenPhotoFragment _takenPhotoFragment;
     private TranslatedTextFragment _translatedTextFragment;
     private TranslatedPhotoFragment _translatedPhotoFragment;
+    private ProgressBar _progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,6 +62,12 @@ public class MainActivity extends AppCompatActivity
         initializeTabbedLayout();
         initializePhotoButton();
         initializeTranslateButton();
+        initializeProgressBar();
+    }
+
+    private void initializeProgressBar()
+    {
+        _progressBar = findViewById(R.id.ProgressBar);
     }
 
     private void initializeTabbedLayout()
@@ -88,19 +96,22 @@ public class MainActivity extends AppCompatActivity
 
         _translateButton.setOnClickListener(v ->
         {
+            _translateButton.setVisibility(View.GONE);
+            _photoButton.setVisibility(View.GONE);
+            _progressBar.setVisibility(View.VISIBLE);
+
             UploadTask ut = new UploadTask(this);
             int selectedIndex = _preferences.getInt(getString(R.string.language_index), 0);
 
             ut.execute(_currentPhotoPath, LANGUAGE_CODES[selectedIndex].toString());
-            _translateButton.setVisibility(View.GONE);
         });
     }
 
     private void initializePhotoButton()
     {
-        Button photoButton = findViewById(R.id.RetryButton);
+        _photoButton = findViewById(R.id.PhotoButton);
 
-        photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
+        _photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
     }
 
     private void initializeLanguageSelector()
@@ -248,13 +259,11 @@ public class MainActivity extends AppCompatActivity
         return rotate;
     }
 
-    public void setTranslatedText(String text)
+    public void setResponseFromServer(String translatedText, String translatedPhotoURL)
     {
-        _translatedTextFragment.setText(text);
-    }
-
-    public void setTranslatedPhoto(String photoURL)
-    {
-        _translatedPhotoFragment.setPhoto("http://35.246.247.149" + photoURL);
+        _translatedTextFragment.setText(translatedText);
+        _translatedPhotoFragment.setPhoto("http://35.246.247.149" + translatedPhotoURL);
+        _progressBar.setVisibility(View.GONE);
+        _photoButton.setVisibility(View.VISIBLE);
     }
 }
