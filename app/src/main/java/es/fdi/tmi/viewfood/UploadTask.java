@@ -41,7 +41,6 @@ public class UploadTask extends AsyncTask<String, String, String>
                 addFormDataPart("lang", targetTranslation).
                 build();
 
-        //TODO Delete debug logs for release.
         try
         {
             Log.d("UPLOAD_FILE", "Request size is " + requestBody.contentLength());
