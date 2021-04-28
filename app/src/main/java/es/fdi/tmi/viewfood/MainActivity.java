@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity
     {
         _translateButton = findViewById(R.id.TranslateButton);
 
+        //When pressed, the translate button hides some views, shows the prograss bar, and launches
+        //an upload task to the server.
         _translateButton.setOnClickListener(v ->
         {
             _translateButton.setVisibility(View.GONE);
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity
         //Scale the photo.
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
 
-        matrix.postRotate(getCameraPhotoOrientation(_currentPhotoPath));
+        matrix.postRotate(getCameraPhotoRotation(_currentPhotoPath));
 
         //Rotate the photo.
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
@@ -229,7 +231,8 @@ public class MainActivity extends AppCompatActivity
         return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
 
-    public static int getCameraPhotoOrientation(String imagePath)
+    //Returns the rotation (in degrees) of a photo taken using the device's camera.
+    public static int getCameraPhotoRotation(String imagePath)
     {
         int rotate, orientation = 0;
 
@@ -259,6 +262,7 @@ public class MainActivity extends AppCompatActivity
         return rotate;
     }
 
+    //Sets data received from the server to their according fragments.
     public void setResponseFromServer(String translatedText, String translatedPhotoURL)
     {
         _translatedTextFragment.setText(translatedText);
@@ -267,6 +271,7 @@ public class MainActivity extends AppCompatActivity
         _photoButton.setVisibility(View.VISIBLE);
     }
 
+    //Displays an alert using an alert dialog.
     public void displayAlert(String alertText)
     {
         //First, return controls to the user, in case they were taken.
