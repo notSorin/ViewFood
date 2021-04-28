@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private TranslatedTextFragment _translatedTextFragment;
     private TranslatedPhotoFragment _translatedPhotoFragment;
     private ProgressBar _progressBar;
+    private ViewPager _viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -83,11 +84,12 @@ public class MainActivity extends AppCompatActivity
         mfa.addFragment(_translatedPhotoFragment, "Translated Photo");
 
         TabLayout tabLayout = findViewById(R.id.MainTabLayout);
-        ViewPager vp = findViewById(R.id.MainPager);
 
-        vp.setOffscreenPageLimit(3);
-        vp.setAdapter(mfa);
-        tabLayout.setupWithViewPager(vp);
+        _viewPager = findViewById(R.id.MainPager);
+
+        _viewPager.setOffscreenPageLimit(3);
+        _viewPager.setAdapter(mfa);
+        tabLayout.setupWithViewPager(_viewPager);
     }
 
     private void initializeTranslateButton()
@@ -269,6 +271,7 @@ public class MainActivity extends AppCompatActivity
         _translatedPhotoFragment.setPhoto("http://35.246.247.149" + translatedPhotoURL);
         _progressBar.setVisibility(View.GONE);
         _photoButton.setVisibility(View.VISIBLE);
+        _viewPager.setCurrentItem(1); //Go to the translated text tab.
     }
 
     //Displays an alert using an alert dialog.
