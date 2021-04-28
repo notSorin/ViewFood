@@ -266,4 +266,14 @@ public class MainActivity extends AppCompatActivity
         _progressBar.setVisibility(View.GONE);
         _photoButton.setVisibility(View.VISIBLE);
     }
+
+    public void displayAlert(String alertText)
+    {
+        //First, return controls to the user, in case they were taken.
+        _progressBar.setVisibility(View.GONE);
+        _photoButton.setVisibility(View.VISIBLE);
+
+        //Second, show an alert dialog.
+        new MaterialAlertDialogBuilder(this).setMessage(alertText).setPositiveButton("OK", null).show();
+    }
 }

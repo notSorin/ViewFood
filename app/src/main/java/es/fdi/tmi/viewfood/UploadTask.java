@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -51,14 +52,18 @@ public class UploadTask extends AsyncTask<String, String, String>
         }
 
         Request request = new Request.Builder().url(SERVER_URL).post(requestBody).build();
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .build();
 
         client.newCall(request).enqueue(new Callback()
         {
             @Override
             public void onFailure(Call call, IOException e)
             {
-                Log.d("UPLOAD_FILE", e.toString());
+                _mainActivity.runOnUiThread(() -> _mainActivity.displayAlert("A network error has occurred. Please check your internet connection and try again"));
             }
 
             @Override
