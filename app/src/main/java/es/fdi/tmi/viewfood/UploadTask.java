@@ -1,7 +1,6 @@
 package es.fdi.tmi.viewfood;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
@@ -41,16 +40,6 @@ public class UploadTask extends AsyncTask<String, String, String>
                 addFormDataPart("image", f.getName(), RequestBody.create(MediaType.parse("image/*"), f)).
                 addFormDataPart("lang", targetTranslation).
                 build();
-
-        try
-        {
-            Log.d("UPLOAD_FILE", "Request size is " + requestBody.contentLength());
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-
         Request request = new Request.Builder().url(SERVER_URL).post(requestBody).build();
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
