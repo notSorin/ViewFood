@@ -54,7 +54,8 @@
                 android:background="@android:color/transparent"
                 app:tabMode="scrollable" />
 
-            <androidx.viewpager.widget.ViewPager
+            <es.fdi.tmi.viewfood.HackyProblematicViewPager
+
                 android:id="@+id/MainPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
