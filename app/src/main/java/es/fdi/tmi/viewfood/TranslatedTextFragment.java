@@ -28,4 +28,9 @@ public class TranslatedTextFragment extends Fragment
     {
         _translatedText.setText(text);
     }
+
+    public void clearData()
+    {
+        _translatedText.setText(R.string.translation_text_placeholder);
+    }
 }

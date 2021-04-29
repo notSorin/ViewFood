@@ -34,4 +34,11 @@ public class TranslatedPhotoFragment extends Fragment
         _translatedPhoto.setVisibility(View.VISIBLE);
         Picasso.get().load(url).into(_translatedPhoto);
     }
+
+    public void clearData()
+    {
+        _translatedPhoto.setVisibility(View.GONE);
+        _textPlaceholder.setVisibility(View.VISIBLE);
+        _textPlaceholder.setText(R.string.translation_photo_placeholder);
+    }
 }

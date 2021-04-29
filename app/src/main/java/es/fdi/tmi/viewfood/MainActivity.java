@@ -186,6 +186,8 @@ public class MainActivity extends AppCompatActivity
             processTakenPhoto();
             _takenPhotoFragment.setPhoto(_photoURI);
             _viewPager.setCurrentItem(0); //Go to the taken photo tab.
+            _translatedTextFragment.clearData();
+            _translatedPhotoFragment.clearData();
         }
     }
 
