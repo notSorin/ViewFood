@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity
             _translateButton.setVisibility(View.VISIBLE);
             processTakenPhoto();
             _takenPhotoFragment.setPhoto(_photoURI);
+            _viewPager.setCurrentItem(0); //Go to the taken photo tab.
         }
     }
 
