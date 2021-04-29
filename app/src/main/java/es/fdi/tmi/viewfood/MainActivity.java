@@ -272,7 +272,11 @@ public class MainActivity extends AppCompatActivity
         _translatedPhotoFragment.setPhoto("http://35.246.247.149" + translatedPhotoURL);
         _progressBar.setVisibility(View.GONE);
         _photoButton.setVisibility(View.VISIBLE);
-        _viewPager.setCurrentItem(1); //Go to the translated text tab.
+
+        //Go to the translated text tab only if the user is on the "taken photo" tab.
+        //If the user is on a different tab, they can stay there.
+        if(_viewPager.getCurrentItem() == 0)
+            _viewPager.setCurrentItem(1);
     }
 
     //Displays an alert using an alert dialog.
