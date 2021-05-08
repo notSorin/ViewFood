@@ -58,25 +58,24 @@ public class UploadTask extends AsyncTask<String, String, String>
             @Override
             public void onResponse(Call call, Response response)
             {
-                try
+                if(response.isSuccessful())
                 {
-                    JSONObject jObject = new JSONObject(response.body().string());
-
-                    _mainActivity.runOnUiThread(() ->
+                    try
                     {
-                        try
-                        {
-                            _mainActivity.setResponseFromServer(jObject.getString("description"), jObject.getString("image"));
-                        }
-                        catch(JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    });
+                        JSONObject jObject = new JSONObject(response.body().string());
+                        String translatedText = jObject.getString("description");
+                        String translatedImageURL = jObject.getString("image");
+
+                        _mainActivity.runOnUiThread(() -> _mainActivity.setResponseFromServer(translatedText, translatedImageURL));
+                    }
+                    catch(JSONException | IOException e)
+                    {
+                        _mainActivity.runOnUiThread(() -> _mainActivity.displayAlert("An error has occurred. Please try again"));
+                    }
                 }
-                catch(JSONException | IOException e)
+                else
                 {
-                    e.printStackTrace();
+                    _mainActivity.runOnUiThread(() -> _mainActivity.displayAlert("An error has occurred. Please try again"));
                 }
             }
         });
