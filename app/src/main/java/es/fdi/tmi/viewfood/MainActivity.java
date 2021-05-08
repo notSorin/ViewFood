@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity
     {
         Bitmap bitmap = BitmapFactory.decodeFile(_currentPhotoPath, null);
         float aspect = (float)bitmap.getWidth() / (float)bitmap.getHeight();
-        int width = 1024, height = (int)(width / aspect);
+        int width = 2048, height = (int)(width / aspect);
         Matrix matrix = new Matrix();
 
         //Scale the photo.
