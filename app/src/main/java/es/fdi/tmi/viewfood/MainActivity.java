@@ -30,6 +30,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Main activity of the app, and entry point.
+ * */
 public class MainActivity extends AppCompatActivity
 {
     private final CharSequence[] LANGUAGE_CHOICES = {"English", "French", "German", "Italian", "Romanian"};
@@ -53,8 +56,6 @@ public class MainActivity extends AppCompatActivity
         initializeViews();
 
         _preferences = getPreferences(Context.MODE_PRIVATE);
-
-        //dispatchTakePictureIntent();
     }
 
     private void initializeViews()
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
     {
         _translateButton = findViewById(R.id.TranslateButton);
 
-        //When pressed, the translate button hides some views, shows the prograss bar, and launches
+        //When pressed, the translate button hides some views, shows the progress bar, and launches
         //an upload task to the server.
         _translateButton.setOnClickListener(v ->
         {
@@ -124,8 +125,11 @@ public class MainActivity extends AppCompatActivity
 
         languageSelector.setOnClickListener(v ->
         {
+            //Grab the index of the currently selected language.
             int selectedIndex = _preferences.getInt(getString(R.string.language_index), 0);
 
+            //Display and alert dialog with all the available languages, with the currently
+            //selected language as the "single choice" in the dialog.
             new MaterialAlertDialogBuilder(MainActivity.this)
                     .setTitle("Translate from Spanish into...")
                     .setSingleChoiceItems(LANGUAGE_CHOICES, selectedIndex, null)
@@ -144,6 +148,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Opens a new image capture intent, and saves the taken photo on a newly created image file.
+     * */
     @SuppressLint("QueryPermissionsNeeded")
     private void dispatchTakePictureIntent()
     {
@@ -180,6 +187,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //When the app returns from the image capture intent, process the photo, and show it on the
+        //correct view.
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
             _translateButton.setVisibility(View.VISIBLE);
@@ -191,10 +200,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //It changes the size of _currentPhotoPath, and it also rotates it according to the exif
-    //rotation of the photo.
-    private Bitmap processTakenPhoto()
+    /**
+     * It changes the size of _currentPhotoPath, and it also rotates it according to the exif
+     * rotation of the photo.
+     * */
+     private Bitmap processTakenPhoto()
     {
+        //Calculate the new width and height of the photo, and change it.
         Bitmap bitmap = BitmapFactory.decodeFile(_currentPhotoPath, null);
         float aspect = (float)bitmap.getWidth() / (float)bitmap.getHeight();
         int width = 2048, height = (int)(width / aspect);
@@ -205,7 +217,7 @@ public class MainActivity extends AppCompatActivity
 
         matrix.postRotate(getCameraPhotoRotation(_currentPhotoPath));
 
-        //Rotate the photo.
+        //Rotate the photo according to its exif rotation.
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
         try
@@ -226,6 +238,9 @@ public class MainActivity extends AppCompatActivity
         return bitmap;
     }
 
+    /**
+     * Creates a file on the app's private space on disk, with a random name.
+     * */
     @SuppressLint("SimpleDateFormat")
     private File createImageFile() throws IOException
     {
@@ -236,7 +251,9 @@ public class MainActivity extends AppCompatActivity
         return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
 
-    //Returns the rotation (in degrees) of a photo taken using the device's camera.
+    /**
+     * Returns the rotation (in degrees) of a photo taken using the device's camera.
+     * */
     public static int getCameraPhotoRotation(String imagePath)
     {
         int rotate, orientation = 0;
