@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Fragment used within a TabbedLayout with the purpose of showing some text.
+ * */
 public class TranslatedTextFragment extends Fragment
 {
     private TextView _translatedText;
@@ -24,11 +27,18 @@ public class TranslatedTextFragment extends Fragment
         return v;
     }
 
+    /**
+     * Sets some text to the fragment's text view.
+     * */
     public void setText(String text)
     {
         _translatedText.setText(text);
     }
 
+    /**
+     * Restores the fragment to its default state.
+     * Overrides the current fragment's text with a default one.
+     * */
     public void clearData()
     {
         _translatedText.setText(R.string.translation_text_placeholder);
