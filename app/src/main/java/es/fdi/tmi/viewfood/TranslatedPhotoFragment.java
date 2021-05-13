@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;
 
+/**
+ * Fragment used within a TabbedLayout with the purpose of showing a translated photo taken by the user.
+ * */
 public class TranslatedPhotoFragment extends Fragment
 {
     private TextView _textPlaceholder;
@@ -28,6 +31,9 @@ public class TranslatedPhotoFragment extends Fragment
         return v;
     }
 
+    /**
+     * Sets a photo in the fragment's image view.
+     * */
     public void setPhoto(String url)
     {
         _textPlaceholder.setVisibility(View.GONE);
@@ -35,6 +41,10 @@ public class TranslatedPhotoFragment extends Fragment
         Picasso.get().load(url).into(_translatedPhoto);
     }
 
+    /**
+     * Restores the fragment to its default state.
+     * Removes the photo from the fragment's image view, and sets a default text in its place.
+     * */
     public void clearData()
     {
         _translatedPhoto.setVisibility(View.GONE);

@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.github.chrisbanes.photoview.PhotoView;
 
+/**
+ * Fragment used within a TabbedLayout with the purpose of showing a photo taken by the user.
+ * */
 public class TakenPhotoFragment extends Fragment
 {
     private PhotoView _takenImage;
@@ -28,6 +31,9 @@ public class TakenPhotoFragment extends Fragment
         return v;
     }
 
+    /**
+     * Sets a photo in the fragment's image view.
+     * */
     public void setPhoto(Uri photoURI)
     {
         _textPlaceholder.setVisibility(View.GONE);

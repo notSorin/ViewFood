@@ -15,6 +15,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * Class used to communicate asynchronously with the project's server.
+ * */
 public class UploadTask extends AsyncTask<String, String, String>
 {
     private final String SERVER_URL = "http://35.246.247.149/api/menu/menu/upload/";
@@ -35,6 +38,7 @@ public class UploadTask extends AsyncTask<String, String, String>
 
     private void uploadFile(String path, String targetTranslation)
     {
+        //Create a request with all the necessary fields to send to the server.
         File f = new File(path);
         RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).
                 addFormDataPart("image", f.getName(), RequestBody.create(MediaType.parse("image/*"), f)).
@@ -47,6 +51,7 @@ public class UploadTask extends AsyncTask<String, String, String>
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build();
 
+        //Send the request to the server.
         client.newCall(request).enqueue(new Callback()
         {
             @Override
@@ -58,25 +63,25 @@ public class UploadTask extends AsyncTask<String, String, String>
             @Override
             public void onResponse(Call call, Response response)
             {
-                try
+                //Make sure the response is successful before trying to access its fields.
+                if(response.isSuccessful())
                 {
-                    JSONObject jObject = new JSONObject(response.body().string());
-
-                    _mainActivity.runOnUiThread(() ->
+                    try
                     {
-                        try
-                        {
-                            _mainActivity.setResponseFromServer(jObject.getString("description"), jObject.getString("image"));
-                        }
-                        catch(JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    });
+                        JSONObject jObject = new JSONObject(response.body().string());
+                        String translatedText = jObject.getString("description");
+                        String translatedImageURL = jObject.getString("image");
+
+                        _mainActivity.runOnUiThread(() -> _mainActivity.setResponseFromServer(translatedText, translatedImageURL));
+                    }
+                    catch(JSONException | IOException e)
+                    {
+                        _mainActivity.runOnUiThread(() -> _mainActivity.displayAlert("An error has occurred. Please try again"));
+                    }
                 }
-                catch(JSONException | IOException e)
+                else
                 {
-                    e.printStackTrace();
+                    _mainActivity.runOnUiThread(() -> _mainActivity.displayAlert("An error has occurred. Please try again"));
                 }
             }
         });

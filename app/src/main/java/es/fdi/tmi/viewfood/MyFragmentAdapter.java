@@ -8,6 +8,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A FragmentPagerAdapter used in combination with a ViewPager and TabbedLayout to hold
+ * information on multiple tabs in the same activity.
+ * */
 public class MyFragmentAdapter extends FragmentPagerAdapter
 {
     private final List<Fragment> _fragmentsList;
