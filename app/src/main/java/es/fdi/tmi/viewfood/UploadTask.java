@@ -15,6 +15,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * Class used to communicate asynchronously with the project's server.
+ * */
 public class UploadTask extends AsyncTask<String, String, String>
 {
     private final String SERVER_URL = "http://35.246.247.149/api/menu/menu/upload/";
@@ -35,6 +38,7 @@ public class UploadTask extends AsyncTask<String, String, String>
 
     private void uploadFile(String path, String targetTranslation)
     {
+        //Create a request with all the necessary fields to send to the server.
         File f = new File(path);
         RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).
                 addFormDataPart("image", f.getName(), RequestBody.create(MediaType.parse("image/*"), f)).
@@ -47,6 +51,7 @@ public class UploadTask extends AsyncTask<String, String, String>
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build();
 
+        //Send the request to the server.
         client.newCall(request).enqueue(new Callback()
         {
             @Override
@@ -58,6 +63,7 @@ public class UploadTask extends AsyncTask<String, String, String>
             @Override
             public void onResponse(Call call, Response response)
             {
+                //Make sure the response is successful before trying to access its fields.
                 if(response.isSuccessful())
                 {
                     try
