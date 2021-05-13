@@ -9,6 +9,9 @@ The user is able to take a photo, and translate it to a target language. The res
 
 ## [1.0.1] - 13-05-2021
 
+### Added
+- An icon for the app
+
 ### Fixed
 - The app is now more secure against bad responses from the server.
 
